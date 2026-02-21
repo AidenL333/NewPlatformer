@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background: #0b0f1a;
+  overflow: hidden;
+}
+
+#player {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 623px;
+  left: 22px;
+  
+}
+
+#Platform1 {
+  width: 140px;
+  height: 12px;
+  top: 611px;
+  left: 443px;
+  position: absolute;
+  background-color: rgb(53, 61, 53);
+}
+
+#Platform2 {
+  width: 30px;
+  height: 22px;
+  top: 587px;
+  left: 630px;
+  position: absolute;
+  background-color: rgb(53, 61, 53);
+}
+
+#Platform3 {
+  width: 30px;
+  height: 22px;
+  top: 546px;
+  left: 696px;
+  position: absolute;
+  background-color: rgb(53, 61, 53);
+}
