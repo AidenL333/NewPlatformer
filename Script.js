@@ -4,6 +4,11 @@ const layers = [...document.querySelectorAll(".parallax-layer")].map(el => ({
 }));
 
 const player = document.getElementById("player");
+const coin1 = document.getElementById("Coin1");
+const coin2 = document.getElementById("Coin2");
+const coin3 = document.getElementById("Coin3");
+const coin4 = document.getElementById("Coin4");
+const spikes1 = document.getElementById("Spikes1")
 
 let x = 0;
 let y = 663;
@@ -11,6 +16,9 @@ let gravity = 0;
 let xspeed = 4;
 let yspeed = 4;
 let time = Date.now()
+let score = 0
+let health = 100
+const maxHealth = 100
 
 let pwidth = player.getBoundingClientRect().height
 
@@ -33,6 +41,27 @@ const keys = {
   ArrowRight: false,
 };
 
+const healthBar = document.getElementById("HealthBar");
+const healthValueDisplay = document.getElementById('health-value');
+
+function updateHealthBar() {
+    const percentage = (health / maxHealth) * 100;
+    
+    healthBar.style.width = percentage + '%';
+    
+    healthValueDisplay.textContent = percentage + '%';
+}
+
+function changeHealth(amount) {
+    currentHealth = Math.min(maxHealth, Math.max(0, currentHealth + amount));
+    updateHealthBar();
+}
+
+updateHealthBar();
+
+
+
+
 function getCameraX(playerX) {
   return playerX - window.innerWidth / 2;
 }
@@ -46,6 +75,21 @@ function renderParallax(playerX) {
     layer.el.style.backgroundPosition = `${offsetX}px 50%`;
   }
 }
+
+function areDivsTouching(elm1, elm2) {
+    const rect1 = elm1.getBoundingClientRect();
+    const rect2 = elm2.getBoundingClientRect();
+
+    const noOverlap = (
+        rect1.top + rect1.height < rect2.top || // rect1 is above rect2
+        rect1.top > rect2.top + rect2.height || // rect1 is below rect2
+        rect1.left + rect1.width < rect2.left || // rect1 is left of rect2
+        rect1.left > rect2.left + rect2.width   // rect1 is right of rect2
+    );
+
+    return !noOverlap;
+}
+
 
 window.addEventListener("keydown", (e) => {
   const key = e.key.toLowerCase();
@@ -254,6 +298,36 @@ function gameLoop() {
       noPlatform = true;
     }
   }
+
+  if (areDivsTouching(player, coin1) && coin1.style.display != "None") {
+    score = score + 1;
+    coin1.style.display = "None";
+    health -= 10;
+  }
+  if (areDivsTouching(player, coin2) && coin2.style.display != "None") {
+    score = score + 1;
+    coin2.style.display = "None";
+    document.getElementById("score").textContent = score;
+  }
+  if (areDivsTouching(player, coin3) && coin3.style.display != "None") {
+    score = score + 1;
+    coin3.style.display = "None";
+    document.getElementById("score").textContent = score;
+  }
+  if (areDivsTouching(player, coin4) && coin4.style.display != "None") {
+    score = score + 1;
+    coin4.style.display = "None";
+    document.getElementById("score").textContent = score;
+  }
+
+  if (areDivsTouching(player, spikes1)) {
+    health = health - 5;
+  }
+
+  
+  document.getElementById("score").textContent = "Score: " + score;
+  
+  updateHealthBar();
 
   renderParallax(x) ;
   requestAnimationFrame(gameLoop);

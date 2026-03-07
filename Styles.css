@@ -31,6 +31,20 @@ body {
   
 }
 
+#Spikes1 {
+  width: 136px;
+  height: 16px;
+  top: 656px;
+  left: 443px;
+  position: absolute;
+  background-image: url("16-bit-spike-Sheet.png");
+  background-size: auto;
+  background-repeat: no-repeat;
+  opacity: 90%;
+  
+}
+
+
 
 
 #Platform2 {
@@ -80,6 +94,129 @@ body {
   background-repeat: no-repeat;
   opacity: 90%;
 }
+
+#Coin1 {
+  width: 17px;
+  height: 18px;
+  top: 443px;
+  left: 829px;
+  position: absolute;
+  background-image: url("coin3_20x20.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 90%;
+}
+
+#Coin2 {
+  width: 17px;
+  height: 18px;
+  top: 485px;
+  left: 765px;
+  position: absolute;
+  background-image: url("coin3_20x20.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 90%;
+}
+
+#Coin3 {
+  width: 17px;
+  height: 18px;
+  top: 527px;
+  left: 701px;
+  position: absolute;
+  background-image: url("coin3_20x20.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 90%;
+}
+
+#Coin4 {
+  width: 17px;
+  height: 18px;
+  top: 568px;
+  left: 635px;
+  position: absolute;
+  background-image: url("coin3_20x20.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 90%;
+}
+
+#score {
+  font-size: 2em;
+  font-weight: bold;
+  color: #0095DD;
+  padding: 10px;
+  border: 2px solid #0095DD;
+  display: inline-block;
+  min-width: 40px;
+  border-radius: 5px;
+  text-align: center;
+  top: 20px;
+  left: 20px;
+  position: absolute;
+}
+
+/* #HealthBar {
+  font-size: 2em;
+  font-weight: bold;
+  background-color: #1eff00;
+  padding: 10px;
+  border: 2px solid #ff0000;
+  display: inline-block;
+  border-radius: 100px;
+  text-align: center;
+  width: 200px;
+  top: 25px;
+  left: 300px;
+  position: absolute;
+}
+
+#HealthBarText {
+  font-size: 2em;
+  font-weight: bold;
+  color: #ff0000;
+  padding: 10px;
+  border: 2px solid #ff0000;
+  display: inline-block;
+  min-width: 40px;
+  border-radius: 100px;
+  text-align: center;
+  top: 15px;
+  left: 175px;
+  position: absolute;
+} */
+
+.health-container {
+    width: 300px;
+    height: 30px;
+    top: 10px;
+    left: 250px;
+    border: 2px solid black;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.HealthBar {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(43, 194, 83); 
+    transition: width 0.5s linear; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+#health-value {
+    color: white;
+    font-weight: bold;
+    z-index: 1; 
+}
+
 
 
 .parallax-container {
