@@ -12,6 +12,10 @@ let xspeed = 4;
 let yspeed = 4;
 let time = Date.now()
 
+let pwidth = player.getBoundingClientRect().height
+
+let pheight = player.getBoundingClientRect().height
+
 
 let noPlatform = true;
 let positionChange = false
@@ -22,7 +26,11 @@ const keys = {
   a: false,
   s: false,
   d: false,
-  e: false
+  e: false,
+  ArrowUp: false,
+  Arrowleft: false,
+  ArrowDown: false,
+  ArrowRight: false,
 };
 
 function getCameraX(playerX) {
@@ -94,9 +102,19 @@ function gameLoop() {
   // Drop
   if (keys.s && noPlatform) y += yspeed;
   // Left
-  if (keys.a && x > 0) x -= xspeed;
+  if (keys.a && x > 0) {
+    x -= xspeed;
+    player.style.backgroundImage = "url('walking-left-1-test.gif')"
+  }
   // Right
-  if (keys.d && (x < window.innerWidth - 23)) x += xspeed;
+  if (keys.d && (x < window.innerWidth - 23)) {
+    x += xspeed;
+    player.style.backgroundImage = "url('walking-right-2-test.gif')"
+  }
+
+  if (keys.a == false && keys.s == false && keys.d == false && keys.w == false) {
+    player.style.backgroundImage = "url('character\ looking\ forward.png')"
+  }
 
   player.style.left = x + "px";
   player.style.top = y + "px";
@@ -119,14 +137,15 @@ function gameLoop() {
   } 
 
   // Down
-  if (y > window.innerHeight - 40) {
-    y = window.innerHeight - 41;
+  if (y > window.innerHeight - pheight) {
+    y = window.innerHeight - pheight - 1;
+    gravity = 0
   }
 
   // Updating gravity accelleration up to a maximum of 20
   y = y + gravity;
   if (gravity < 20) {
-    gravity = gravity + 1;
+    gravity = gravity + 0.7;
   }
 
 
