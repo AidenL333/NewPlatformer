@@ -46,8 +46,9 @@ const healthValueDisplay = document.getElementById('health-value');
 
 function updateHealthBar() {
     const percentage = (health / maxHealth) * 100;
+    const percentageW = (health / maxHealth) * 70;
     
-    healthBar.style.width = percentage + '%';
+    healthBar.style.width = percentageW + '%';
     
     healthValueDisplay.textContent = percentage + '%';
 }
@@ -56,6 +57,7 @@ function changeHealth(amount) {
     currentHealth = Math.min(maxHealth, Math.max(0, currentHealth + amount));
     updateHealthBar();
 }
+
 
 updateHealthBar();
 
@@ -140,8 +142,10 @@ function gameLoop() {
   // Movement
   // Jump
   if (keys.w && lockouttime < time) {
-    gravity = -10;
-    lockouttime = time + 500
+    if (gravity >= 0 && gravity <= 0.7){
+      gravity = -10;
+      lockouttime = time + 500
+    }
   }
   // Drop
   if (keys.s && noPlatform) y += yspeed;
