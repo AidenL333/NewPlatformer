@@ -4,6 +4,7 @@ const layers = [...document.querySelectorAll(".parallax-layer")].map(el => ({
 }));
 
 const player = document.getElementById("player");
+const bluelaser = document.getElementById("bluelaser");
 const coin1 = document.getElementById("Coin1");
 const coin2 = document.getElementById("Coin2");
 const coin3 = document.getElementById("Coin3");
@@ -16,13 +17,23 @@ let gravity = 0;
 let xspeed = 4;
 let yspeed = 4;
 let time = Date.now()
-let score = 0
-let health = 100
-const maxHealth = 100
+let score = 0;
+let health = 100;
+let worldtime = 0;
+let graceperiod = 0;
+const maxHealth = 100;
+
+let laserx = 0;
+let lasery = 0;
 
 let pwidth = player.getBoundingClientRect().height
 
 let pheight = player.getBoundingClientRect().height
+
+
+let laserwidth = bluelaser.getBoundingClientRect().height
+
+let laserheight = bluelaser.getBoundingClientRect().height
 
 
 let noPlatform = true;
@@ -160,12 +171,22 @@ function gameLoop() {
     player.style.backgroundImage = "url('walking-right-2-test.gif')"
   }
 
+  // Shoot
+  if (keys.e) {
+    laserx = x;
+    lasery = y;
+  }
+
+
   if (keys.a == false && keys.s == false && keys.d == false && keys.w == false) {
     player.style.backgroundImage = "url('character\ looking\ forward.png')"
   }
 
   player.style.left = x + "px";
   player.style.top = y + "px";
+
+  bluelaser.style.left = laserx + "px";
+  bluelaser.style.top = lasery + "px";
 
 
   // Player bounds
@@ -324,16 +345,27 @@ function gameLoop() {
     document.getElementById("score").textContent = score;
   }
 
-  if (areDivsTouching(player, spikes1)) {
-    health = health - 5;
+  
+  if (graceperiod < worldtime) {
+    if (areDivsTouching(player, spikes1)) {
+      health = health - 5;
+      graceperiod = worldtime + 35;
+    }
   }
 
+  if (health <= 0) {
+    health = 100;
+    x = 0;
+    y = 663;
+  }
   
   document.getElementById("score").textContent = "Score: " + score;
   
   updateHealthBar();
 
   renderParallax(x) ;
+  worldtime += 1;
+  console.log(worldtime);
   requestAnimationFrame(gameLoop);
 }
 

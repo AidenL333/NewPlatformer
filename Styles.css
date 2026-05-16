@@ -143,6 +143,16 @@ body {
   opacity: 90%;
 }
 
+#bluelaser {
+  width: 65px;
+  height: 23px;
+  position: absolute;
+  background-image: url("blue\ laser.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 90%;
+}
+
 #score {
   font-size: 2em;
   font-weight: bold;
