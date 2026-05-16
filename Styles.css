@@ -151,6 +151,88 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   opacity: 90%;
+  scale: 50%;
+}
+
+#bluelaser2 {
+  width: 65px;
+  height: 23px;
+  position: absolute;
+  background-image: url("blue\ laser.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 90%;
+  scale: 50%;
+}
+
+#bluelaser3 {
+  width: 65px;
+  height: 23px;
+  position: absolute;
+  background-image: url("blue\ laser.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 90%;
+  scale: 50%;
+}
+
+#bluelaser4 {
+  width: 65px;
+  height: 23px;
+  position: absolute;
+  background-image: url("blue\ laser.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 90%;
+  scale: 50%;
+}
+
+#bluelaserleft {
+  width: 65px;
+  height: 23px;
+  position: absolute;
+  background-image: url("blue\ laser.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 90%;
+  scale: 50%;
+  transform:scaleX(-1);
+}
+
+#bluelaserleft2 {
+  width: 65px;
+  height: 23px;
+  position: absolute;
+  background-image: url("blue\ laser.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 90%;
+  scale: 50%;
+  transform:scaleX(-1);
+}
+
+#bluelaserleft3 {
+  width: 65px;
+  height: 23px;
+  position: absolute;
+  background-image: url("blue\ laser.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 90%;
+  scale: 50%;
+  transform:scaleX(-1);
+}
+
+#bluelaserleft4  {
+  width: 65px;
+  height: 23px;
+  position: absolute;
+  background-image: url("blue\ laser.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 90%;
+  scale: 50%;
+  transform:scaleX(-1);
 }
 
 #score {

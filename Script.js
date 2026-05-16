@@ -5,11 +5,32 @@ const layers = [...document.querySelectorAll(".parallax-layer")].map(el => ({
 
 const player = document.getElementById("player");
 const bluelaser = document.getElementById("bluelaser");
+const bluelaser2 = document.getElementById("bluelaser2");
+const bluelaser3 = document.getElementById("bluelaser3");
+const bluelaser4 = document.getElementById("bluelaser4");
 const coin1 = document.getElementById("Coin1");
 const coin2 = document.getElementById("Coin2");
 const coin3 = document.getElementById("Coin3");
 const coin4 = document.getElementById("Coin4");
 const spikes1 = document.getElementById("Spikes1")
+const lasers = [
+  bluelaser,
+  bluelaser2,
+  bluelaser3,
+  bluelaser4
+];
+
+const platforms = [
+  document.getElementById("Platform1"),
+  document.getElementById("Platform2"),
+  document.getElementById("Platform3"),
+  document.getElementById("Platform4"),
+  document.getElementById("Platform5")
+];
+
+const spikes = [
+  spikes1
+];
 
 let x = 0;
 let y = 663;
@@ -22,18 +43,23 @@ let health = 100;
 let worldtime = 0;
 let graceperiod = 0;
 const maxHealth = 100;
+let laserspeed = 7.5;
+let laserNumber = 0;
+let gracePeriodShot = 0;
 
 let laserx = 0;
 let lasery = 0;
+let laser2x = 0;
+let laser2y = 0;
+let laser3x = 0;
+let laser3y = 0;
+let laser4x = 0;
+let laser4y = 0;
 
 let pwidth = player.getBoundingClientRect().height
 
 let pheight = player.getBoundingClientRect().height
 
-
-let laserwidth = bluelaser.getBoundingClientRect().height
-
-let laserheight = bluelaser.getBoundingClientRect().height
 
 
 let noPlatform = true;
@@ -56,17 +82,17 @@ const healthBar = document.getElementById("HealthBar");
 const healthValueDisplay = document.getElementById('health-value');
 
 function updateHealthBar() {
-    const percentage = (health / maxHealth) * 100;
-    const percentageW = (health / maxHealth) * 70;
-    
-    healthBar.style.width = percentageW + '%';
-    
-    healthValueDisplay.textContent = percentage + '%';
+  const percentage = (health / maxHealth) * 100;
+  const percentageW = (health / maxHealth) * 70;
+
+  healthBar.style.width = percentageW + '%';
+
+  healthValueDisplay.textContent = percentage + '%';
 }
 
 function changeHealth(amount) {
-    currentHealth = Math.min(maxHealth, Math.max(0, currentHealth + amount));
-    updateHealthBar();
+  currentHealth = Math.min(maxHealth, Math.max(0, currentHealth + amount));
+  updateHealthBar();
 }
 
 
@@ -90,19 +116,44 @@ function renderParallax(playerX) {
 }
 
 function areDivsTouching(elm1, elm2) {
-    const rect1 = elm1.getBoundingClientRect();
-    const rect2 = elm2.getBoundingClientRect();
+  const rect1 = elm1.getBoundingClientRect();
+  const rect2 = elm2.getBoundingClientRect();
 
-    const noOverlap = (
-        rect1.top + rect1.height < rect2.top || // rect1 is above rect2
-        rect1.top > rect2.top + rect2.height || // rect1 is below rect2
-        rect1.left + rect1.width < rect2.left || // rect1 is left of rect2
-        rect1.left > rect2.left + rect2.width   // rect1 is right of rect2
-    );
+  const noOverlap = (
+    rect1.top + rect1.height < rect2.top || // rect1 is above rect2
+    rect1.top > rect2.top + rect2.height || // rect1 is below rect2
+    rect1.left + rect1.width < rect2.left || // rect1 is left of rect2
+    rect1.left > rect2.left + rect2.width   // rect1 is right of rect2
+  );
 
-    return !noOverlap;
+  return !noOverlap;
 }
 
+function resetLaser(laser, laserNumber) {
+
+  laser.style.left = "-99999px";
+  laser.style.top = "-99999px";
+
+  if (laserNumber == 0) {
+    laserx = -99999;
+    lasery = -99999;
+  }
+
+  if (laserNumber == 1) {
+    laser2x = -99999;
+    laser2y = -99999;
+  }
+
+  if (laserNumber == 2) {
+    laser3x = -99999;
+    laser3y = -99999;
+  }
+
+  if (laserNumber == 3) {
+    laser4x = -99999;
+    laser4y = -99999;
+  }
+}
 
 window.addEventListener("keydown", (e) => {
   const key = e.key.toLowerCase();
@@ -153,7 +204,7 @@ function gameLoop() {
   // Movement
   // Jump
   if (keys.w && lockouttime < time) {
-    if (gravity >= 0 && gravity <= 0.7){
+    if (gravity >= 0 && gravity <= 0.7) {
       gravity = -10;
       lockouttime = time + 500
     }
@@ -171,12 +222,82 @@ function gameLoop() {
     player.style.backgroundImage = "url('walking-right-2-test.gif')"
   }
 
+
   // Shoot
   if (keys.e) {
-    laserx = x;
-    lasery = y;
+    if (gracePeriodShot < worldtime) {
+      laserNumber = laserNumber + 1;
+      if (laserNumber == 4) {
+        laserNumber = 0;
+      }
+      if (laserNumber == 0) {
+        laserx = x;
+        lasery = y;
+      }
+      if (laserNumber == 1) {
+        laser2x = x;
+        laser2y = y;
+      }
+      if (laserNumber == 2) {
+        laser3x = x;
+        laser3y = y;
+      }
+      if (laserNumber == 3) {
+        laser4x = x;
+        laser4y = y;
+      }
+      gracePeriodShot = worldtime + 30;
+    }
   }
 
+
+  if (laserx > -500) {
+    laserx = laserx + laserspeed;
+  }
+
+  if (laser2x > -500) {
+    laser2x = laser2x + laserspeed;
+  }
+
+  if (laser3x > -500) {
+    laser3x = laser3x + laserspeed;
+  }
+
+  if (laser4x > -500) {
+    laser4x = laser4x + laserspeed;
+  }
+
+  if (laserx > window.innerWidth + 200) {
+    resetLaser(bluelaser, 0);
+  }
+
+  if (laser2x > window.innerWidth + 200) {
+    resetLaser(bluelaser2, 1);
+  }
+
+  if (laser3x > window.innerWidth + 200) {
+    resetLaser(bluelaser3, 2);
+  }
+
+  if (laser4x > window.innerWidth + 200) {
+    resetLaser(bluelaser4, 3);
+  }
+
+  if (laserx > window.innerWidth + 200) {
+    laserx = -1000;
+  }
+
+  if (laser2x > window.innerWidth + 200) {
+    laser2x = -1000;
+  }
+
+  if (laser3x > window.innerWidth + 200) {
+    laser3x = -1000;
+  }
+
+  if (laser4x > window.innerWidth + 200) {
+    laser4x = -1000;
+  }
 
   if (keys.a == false && keys.s == false && keys.d == false && keys.w == false) {
     player.style.backgroundImage = "url('character\ looking\ forward.png')"
@@ -188,22 +309,53 @@ function gameLoop() {
   bluelaser.style.left = laserx + "px";
   bluelaser.style.top = lasery + "px";
 
+  bluelaser2.style.left = laser2x + "px";
+  bluelaser2.style.top = laser2y + "px";
+
+  bluelaser3.style.left = laser3x + "px";
+  bluelaser3.style.top = laser3y + "px";
+
+  bluelaser4.style.left = laser4x + "px";
+  bluelaser4.style.top = laser4y + "px";
+
+  for (let i = 0; i < lasers.length; i++) {
+
+    // Check collision with platforms
+    for (const platform of platforms) {
+
+      if (areDivsTouching(lasers[i], platform)) {
+
+        resetLaser(lasers[i], i);
+
+      }
+    }
+
+    // Check collision with spikes
+    for (const spike of spikes) {
+
+      if (areDivsTouching(lasers[i], spike)) {
+
+        resetLaser(lasers[i], i);
+
+      }
+    }
+  }
 
   // Player bounds
   // Left Player Bound
   if (x < 0) {
-   x = 1;
-  } 
+    x = 1;
+  }
 
   // Right
   if (x > window.innerWidth - 22) {
-    x = window.innerWidth-23;
-  } 
+    x = window.innerWidth - 23;
+  }
 
   // Up
   if (y < 10) {
-   y = 11;
-  } 
+    y = 11;
+  }
 
   // Down
   if (y > window.innerHeight - pheight) {
@@ -229,7 +381,7 @@ function gameLoop() {
         noPlatform = true;
       }
     } else if ((y >= 623)) {
-      if ((y + gravity) <623) {
+      if ((y + gravity) < 623) {
         gravity = 0
         y = 624
         noPlatform = false;
@@ -239,7 +391,7 @@ function gameLoop() {
     } else {
       noPlatform = true;
     }
-    
+
   }
 
   // Platform 2
@@ -250,7 +402,7 @@ function gameLoop() {
       y = platformTop - 20;
       noPlatform = false;
     } else if ((y >= 609)) {
-      if ((y + gravity) <609) {
+      if ((y + gravity) < 609) {
         gravity = 0
         y = 610
         noPlatform = false;
@@ -259,11 +411,11 @@ function gameLoop() {
       }
     } else {
       noPlatform = true;
-    } 
+    }
   }
 
-  
-    
+
+
   // Platform 3
   if (x + 20 > 696 && x < 726) {
     let platformTop = 546;
@@ -283,7 +435,7 @@ function gameLoop() {
       noPlatform = true;
     }
   }
-  
+
   // Platform 4
   if (x + 20 > 760 && x < 790) {
     let platformTop = 505;
@@ -327,7 +479,7 @@ function gameLoop() {
   if (areDivsTouching(player, coin1) && coin1.style.display != "None") {
     score = score + 1;
     coin1.style.display = "None";
-    health -= 10;
+    document.getElementById("score").textContent = score;
   }
   if (areDivsTouching(player, coin2) && coin2.style.display != "None") {
     score = score + 1;
@@ -345,7 +497,7 @@ function gameLoop() {
     document.getElementById("score").textContent = score;
   }
 
-  
+
   if (graceperiod < worldtime) {
     if (areDivsTouching(player, spikes1)) {
       health = health - 5;
@@ -358,12 +510,12 @@ function gameLoop() {
     x = 0;
     y = 663;
   }
-  
+
   document.getElementById("score").textContent = "Score: " + score;
-  
+
   updateHealthBar();
 
-  renderParallax(x) ;
+  renderParallax(x);
   worldtime += 1;
   console.log(worldtime);
   requestAnimationFrame(gameLoop);
